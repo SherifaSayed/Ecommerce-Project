@@ -8,4 +8,8 @@ export class UserService {
     {
      return "working "
     }
+    profile(user:any)
+    {
+       return user;
+    }
 }
