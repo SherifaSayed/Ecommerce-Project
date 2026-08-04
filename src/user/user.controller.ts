@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Logger, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard, RolesGuard } from 'src/Guards';
 import type { UserDocument} from 'src/Common'
@@ -8,6 +8,7 @@ import { UnifiedResponseInterceptor } from 'src/Common/interceptor';
 
 @Controller('user')
 export class UserController {
+   private readonly logger = new Logger(UserController.name)
   constructor(private readonly userService: UserService) {}
 
 @Get()
@@ -39,7 +40,7 @@ async profile(
 @Get('list')
 async list() {
   const result = await this.userService.list();
-
+   this.logger.debug('user retrived successfully')
   return {
     message: 'Users retrieved successfully',
     data: result,
