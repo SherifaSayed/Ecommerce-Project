@@ -1,7 +1,9 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard, RolesGuard } from 'src/Guards';
-import { UserRole } from 'src/Common';
+import type { UserDocument} from 'src/Common'
+ import  {UserRole } from 'src/Common';
+import { Auth, Roles, User } from 'src/Common/Decorators';
 
 @Controller('user')
 export class UserController {
@@ -14,11 +16,11 @@ return this.userService.checkHealth();
 }
 
  @Get('profile')
- @UseGuards(AuthGuard, new RolesGuard([UserRole.USER]))
- userprofile(@Req()request:any)
+@Auth(UserRole.USER)
+ userprofile(@User()  user:UserDocument)
  {
-    console.log(request.user);
+   
 
-  return this.userService.profile(request.user);
+  return this.userService.profile(user);
  }
 }
