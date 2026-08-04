@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import customCongiguration from './config/custom-congiguration';
 import { CacheModule } from '@nestjs/cache-manager';
+import KeyvRedis, { Keyv } from '@keyv/redis';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -24,7 +25,16 @@ import { CacheModule } from '@nestjs/cache-manager';
       }
     })
   }),
- CacheModule.register({isGlobal:true,}), UserModule, AuthModule ],
+CacheModule.registerAsync({
+  isGlobal:true,
+  useFactory: async () => {
+    return {
+      stores: [
+        new KeyvRedis('redis://localhost:6379'),
+      ],
+    };
+  },
+}), UserModule, AuthModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })
