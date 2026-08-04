@@ -9,6 +9,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import customCongiguration from './config/custom-congiguration';
 import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis, { Keyv } from '@keyv/redis';
+import { CategoryModule } from './category/category.module';
+import { BrandModule } from './brand/brand.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -34,7 +37,7 @@ CacheModule.registerAsync({
       ],
     };
   },
-}), UserModule, AuthModule ],
+}), UserModule, AuthModule, CategoryModule, BrandModule, ProductModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })
