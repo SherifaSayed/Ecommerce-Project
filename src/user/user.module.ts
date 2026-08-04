@@ -7,6 +7,7 @@ import { UserRepository } from 'src/DB/Repositories';
 import { userModel } from 'src/DB/models';
 import { AuthGuard } from 'src/Guards';
 
+
 @Module({
   imports:[userModel],
   controllers: [UserController],

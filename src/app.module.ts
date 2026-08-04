@@ -7,6 +7,7 @@ import { Connection } from 'mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import customCongiguration from './config/custom-congiguration';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -22,7 +23,8 @@ import customCongiguration from './config/custom-congiguration';
         return connection;
       }
     })
-  }),UserModule, AuthModule ],
+  }),
+ CacheModule.register({isGlobal:true,}), UserModule, AuthModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })

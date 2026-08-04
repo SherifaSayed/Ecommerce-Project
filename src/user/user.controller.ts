@@ -34,4 +34,20 @@ async profile(
     }
   };
 }
+
+
+@Get('list')
+async list() {
+  const result = await this.userService.list();
+
+  return {
+    message: 'Users retrieved successfully',
+    data: result,
+    meta: {
+      timestamp: new Date().toISOString(),
+      path: '/user/list'
+    }
+  };
+}
+
 }
