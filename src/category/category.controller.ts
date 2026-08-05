@@ -20,7 +20,7 @@ export class CategoryController {
 findAll(
 @Query('name') name: string
 ) {
-  return this.categoryService.findAll({ name });
+  return this.categoryService.findAll(name?{ name }:{});
 }
 
   @Get(':id')
