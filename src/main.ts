@@ -8,10 +8,15 @@ import { LoggerMiddleWare } from './MiddleWares';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{logger: new ConsoleLogger({logLevels:['log']})});
   const configService= app.get(ConfigService)
+  app.use((req, res, next) => {
+  console.log("Request reached:", req.url);
+  next();
+});
 app.useGlobalPipes(
   new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
+    transform:true
   }),
 );
 app.useGlobalInterceptors(new UnifiedResponseInterceptor)

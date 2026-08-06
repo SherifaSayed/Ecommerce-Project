@@ -61,12 +61,11 @@ export class Brand {
   })
   isDeleted: boolean;
 
-  @Prop([
+  @Prop(
     {
-      type: Types.ObjectId,
-      ref: "Category",
+      type: [{type:Types.ObjectId,ref: "Category"}],
     },
-  ])
+  )
   categoryIds: Types.ObjectId[];
 }
 

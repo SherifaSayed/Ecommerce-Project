@@ -14,8 +14,12 @@ export default abstract class  BaseRepository <T> {
     return this.model.findOne(filters).select(select);
   }
 
-  findDocumentById(id: Types.ObjectId): Promise<T | null> {
-    return this.model.findById(id);
+  findDocumentById(id: Types.ObjectId, options?: mongoose.QueryOptions): Promise<T | null> {
+    const {populate} = options || {};
+    const query= this.model.findById(id) 
+     if (populate)
+      query.populate(populate as PopulateOptions);
+    return query;
   }
 
   findDocuments(

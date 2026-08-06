@@ -12,6 +12,7 @@ import KeyvRedis, { Keyv } from '@keyv/redis';
 import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { ProductModule } from './product/product.module';
+import { GlobalModule } from './global.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -37,7 +38,7 @@ CacheModule.registerAsync({
       ],
     };
   },
-}), UserModule, AuthModule, CategoryModule, BrandModule, ProductModule ],
+}),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })
