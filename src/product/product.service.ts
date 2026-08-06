@@ -20,7 +20,7 @@ export class ProductService {
    if (!brandData) {
      throw new NotFoundException("Brand not found");
                    }
-const categoryData = brandData.categoryIds.find((c) => c.toString() === category.toString());
+const categoryData = brandData.categoryIds.find((c) => c._id.toString() === category.toString());
 
 if (!categoryData) {
    throw new NotFoundException("Category not found");
