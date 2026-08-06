@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import customCongiguration from './config/custom-congiguration';
+import customCongiguration from './config/custom-configuration';
 import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis, { Keyv } from '@keyv/redis';
 import { CategoryModule } from './category/category.module';

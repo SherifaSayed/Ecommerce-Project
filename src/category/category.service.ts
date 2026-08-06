@@ -3,14 +3,16 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { UserDocument } from 'src/Common';
 import { CategoryRepository } from 'src/DB/Repositories';
+import { FileService } from 'src/Common/Services';
 
 @Injectable()
 export class CategoryService {
   constructor(
-    private categoryRepo: CategoryRepository
+    private categoryRepo: CategoryRepository,
+    private fileService:FileService
   ) {}
 
-  async create(body: CreateCategoryDto, user: UserDocument) {
+  async create(body: CreateCategoryDto, user: UserDocument ,file :Express.Multer.File) {
     const { name, description } = body;
     const { _id } = user;
 
@@ -20,13 +22,19 @@ export class CategoryService {
     if (category) {
       throw new ConflictException('Category already exists');
     }
-
-    // handle logo
- return this.categoryRepo.creatDocument({
+  const categoryInstaance= new this.categoryRepo.categoryModel({
   name,
   description,
   createdBy: _id,
-});
+})
+    let uploadedDatat;
+  if(file)
+  {
+    uploadedDatat= await this.fileService.uploadFile(file,`categories/${categoryInstaance._id as unknown as string}`);
+    categoryInstaance.logo=uploadedDatat.key;
+  }
+   const newCategory= await categoryInstaance.save()
+ return {newCategory, uploadedDatat};
 }
 
 

@@ -48,4 +48,6 @@ export class SignUpDto {
 
   @IsString()
   phoneNumber!: string;
+  @IsString()
+  role!: string;
 }

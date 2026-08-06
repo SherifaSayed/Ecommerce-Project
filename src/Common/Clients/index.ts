@@ -1,0 +1,1 @@
+export {default as S3ClientService} from './s3.client'

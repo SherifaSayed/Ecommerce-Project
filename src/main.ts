@@ -8,8 +8,7 @@ import { LoggerMiddleWare } from './MiddleWares';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{logger: new ConsoleLogger({logLevels:['log']})});
   const configService= app.get(ConfigService)
-  app.use(LoggerMiddleWare)
-  app.useGlobalPipes(
+app.useGlobalPipes(
   new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,

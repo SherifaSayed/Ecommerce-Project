@@ -73,12 +73,13 @@ async signUp(body: SignUpDto) {
     gender,
     email,
     phoneNumber,
+    role
   } = body;
 
   // duplication checks
   await this._checkDuplicates(email, phoneNumber);
   return this.userRepository.creatDocument({
-  firstName,lastName,password,gender,email, phoneNumber,});
+  firstName,lastName,password,gender,email, phoneNumber,role});
 }
 async signIn(body:SignIn)
 {

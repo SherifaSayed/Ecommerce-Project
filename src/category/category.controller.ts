@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Auth, User } from 'src/Common/Decorators';
 import {  UserRole } from 'src/Common';
 import type {UserDocument} from '../Common'
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'src/config';
 
 @Controller('category')
 export class CategoryController {
@@ -12,8 +14,9 @@ export class CategoryController {
 
   @Post()
   @Auth(UserRole.ADMIN)
-  create(@Body() body: CreateCategoryDto, @User()user:UserDocument) {
-    return this.categoryService.create(body,user);
+  @UseInterceptors(FileInterceptor('image',multerConfig))
+  create(@Body() body: CreateCategoryDto, @User()user:UserDocument, @UploadedFile()file :Express.Multer.File) {
+    return this.categoryService.create(body,user,file);
   }
 
   @Get()

@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import multer from 'multer';
 @Injectable()
-export abstract class S3ClientService {
+export default class S3ClientService {
     private config;
     private s3Client:S3Client;
     private bucketName;

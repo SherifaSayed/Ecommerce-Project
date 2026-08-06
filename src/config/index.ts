@@ -1,0 +1,1 @@
+ export {default as multerConfig} from './multer.config'
