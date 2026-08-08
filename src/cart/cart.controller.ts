@@ -45,7 +45,12 @@ async updateProductQuantity(
   const result = await this.cartService.updateProductQuantity({authUser,productId,quantity: body.quantity});
    return { result };
   }
-
+@Get('get-cart')
+@Auth('user')
+async getCart(@User() authUser:UserDocument) {
+  const result = await this.cartService.getCart({ authUser });
+  return { result };
+}
   @Post()
   create(@Body() createCartDto: AddToCartDto) {
     return this.cartService.create(createCartDto);

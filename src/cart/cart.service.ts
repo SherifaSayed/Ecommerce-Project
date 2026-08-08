@@ -87,6 +87,16 @@ if (!userCart) {
 
   return await userCart.save();
 }
+
+ 
+async getCart({ authUser }) {
+  const userId = authUser.user._id;
+
+  return await this.cartRepository.findOneDocument({
+    filters: { userId },
+    select: 'products subTotal'
+  });
+}
   // findAll() {
   //   return `This action returns all cart`;
   // }
