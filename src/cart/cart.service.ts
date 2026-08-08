@@ -60,7 +60,33 @@ if (!userCart) {
 
   return await userCart.save();
 }
-  
+  async updateProductQuantity({ authUser, productId, quantity }) {
+  const userId = authUser.user._id;
+
+  const userCart = await this.cartRepository.findOneDocument({
+    filters: { userId, 'products.productId': productId }
+  });
+
+  if (!userCart) throw new NotFoundException('Cart not found');
+
+  const product = await this.productRepository.findOneDocument({
+    filters: { _id: productId }
+  });
+
+  if (!product) throw new NotFoundException('Product not found');
+
+  if (quantity > product.stock)
+    throw new BadRequestException('Not enough stock');
+
+  userCart.products.find(product => {
+    if (product.productId.equals(productId)) {
+      product.quantity = quantity;
+      return product;
+    }
+    });
+
+  return await userCart.save();
+}
   // findAll() {
   //   return `This action returns all cart`;
   // }
