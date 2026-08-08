@@ -38,6 +38,29 @@ if (!userCart) {
      userCart.products.push({productId, quantity, finalPrice:product.finalPrice})
      return await userCart.save();
 }
+
+  async removeFromCart({ productId, authUser }) {
+  const userId = authUser.user._id;
+
+  const product = await this.productRepository.findOneDocument({
+    filters: { _id: productId }
+  });
+
+  if (!product) throw new NotFoundException('Product not found');
+
+  const userCart = await this.cartRepository.findOneDocument({
+    filters: { userId, 'products.productId': productId }
+  });
+
+  if (!userCart) throw new NotFoundException('Cart not found');
+
+  userCart.products = userCart.products.filter(
+    product => !product.productId.equals(productId)
+  );
+
+  return await userCart.save();
+}
+  
   // findAll() {
   //   return `This action returns all cart`;
   // }

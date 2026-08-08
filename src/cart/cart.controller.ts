@@ -25,7 +25,15 @@ export class CartController {
   }
 
 
-
+@Patch('remove-from-cart/:productId')
+@Auth('user')
+async removeFromCart(
+  @Param('productId') productId: string,
+   @User() authUser: UserDocument
+) {
+  const result = await this.cartService.removeFromCart({ productId, authUser })
+  return { result }
+}
 
 
 
