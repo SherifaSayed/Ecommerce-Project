@@ -13,6 +13,7 @@ import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { ProductModule } from './product/product.module';
 import { GlobalModule } from './global.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -38,7 +39,7 @@ CacheModule.registerAsync({
       ],
     };
   },
-}),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule ],
+}),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule, CartModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })
