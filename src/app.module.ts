@@ -14,6 +14,8 @@ import { BrandModule } from './brand/brand.module';
 import { ProductModule } from './product/product.module';
 import { GlobalModule } from './global.module';
 import { CartModule } from './cart/cart.module';
+// import { GatewayModule } from './GateWays/gateway.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -39,7 +41,8 @@ CacheModule.registerAsync({
       ],
     };
   },
-}),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule, CartModule ],
+}),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule, CartModule,
+ OrderModule ],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })

@@ -140,12 +140,19 @@ export default class TokenService {
     };
   }
 
+  async validateAndVerifyToken(token: string) {
+    return await this.decodeToken({
+      token,
+      tokenType: TOKEN_TYPES.ACCESS,
+    });
+  }
+
   private detectSignatureByRole({
     role,
   }: {
     role: string;
   }): ISignatures {
-    return this.configService.get<ISignatures>(
+    return this.configService.get(
       role === UserRole.ADMIN
         ? 'jwt.admin'
         : 'jwt.user',
