@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 import { OrderResolver } from "./Resolvers/order.resolver";
+import { OrderModule } from "src/order/order.module";
 
 
 @Module({
-    imports: [],
+    imports: [OrderModule],
     controllers: [],
     providers: [OrderResolver],
     exports: [],

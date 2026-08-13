@@ -156,6 +156,14 @@ async cancelOrderService(orderId: string, user:UserDocument) {
   this.productRepository.incrementProductsStock(order?.cartId['products'])
        return 'Success'
       }
+
+
+ async getOrders()
+ {
+  return await this.orderRepository.findOneDocument({})
+ }
+
+
   create(createOrderDto: CreateOrderDto) {
     return 'This action adds a new order';
   }

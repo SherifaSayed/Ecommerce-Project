@@ -13,5 +13,6 @@ import { RealTimeGateway } from 'src/GateWays/websocket.gateway';
   imports:[orderModel, CartModel, productModel],
   controllers: [OrderController],
   providers: [OrderService, CartService,CartRespository,ProductRepository, OrderRespository, StripeService,RealTimeGateway],
+  exports: [OrderService, CartService,CartRespository,ProductRepository, OrderRespository, StripeService,RealTimeGateway]
 })
 export class OrderModule {}
