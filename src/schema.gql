@@ -2,7 +2,59 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CartProductsObjectType {
+  _id: ID!
+  productId: ID!
+  quantity: Float!
+  finalPrice: Float!
+}
+
+type CartObjectType {
+  _id: ID!
+  products: [CartProductsObjectType!]!
+  subTotal: Float!
+}
+
+type OrderObject {
+  _id: ID!
+  userId: ID!
+  cartId: CartObjectType!
+  address: String!
+  phone: String!
+  paymentMethod: PaymentMethodEnum!
+  totalAmount: Float!
+  orderStatus: OrderStatusEnum!
+  paymentIntent: String
+}
+
+enum PaymentMethodEnum {
+  CASH
+  CREDIT_CARD
+}
+
+enum OrderStatusEnum {
+  PENDING
+  PLACED
+  DELIVERED
+  CANCELLED
+  RETURNED
+  REFUNDED
+  ON_WAY
+  PAID
+}
+
 type Query {
   """test desc"""
   RootQueryResolver: String!
+
+  """return number"""
+  RootQueryNumber: Float!
+
+  """get all orders"""
+  ListOrders(listOrderFilters: ListOrderFiltersDto!): [OrderObject!]!
+}
+
+input ListOrderFiltersDto {
+  orderStatus: OrderStatusEnum
+  paymentMethod: PaymentMethodEnum
 }

@@ -1,8 +1,9 @@
-import { Resolver, Query } from "@nestjs/graphql";
+import { Resolver, Query, Args } from "@nestjs/graphql";
 import { OrderService } from "src/order/order.service";
-import { OrderObject } from "../Types/order.types";
+import { ListOrderFiltersDto, OrderObject } from "../Types/order.types";
+import { UsePipes, ValidationPipe } from "@nestjs/common";
 
-
+@UsePipes(new ValidationPipe({whitelist:true}))
 @Resolver()
 export class OrderResolver {
 
@@ -20,8 +21,8 @@ export class OrderResolver {
     }
 
     @Query(() => [OrderObject], { name: "ListOrders", description: 'get all orders' })
-    async listOrders() {
-        return await this.orderService.getOrders()
+    async listOrders(@Args('listOrderFilters')listOrderFilters:ListOrderFiltersDto) {
+        return await this.orderService.getOrders(listOrderFilters)
     }
 
 }

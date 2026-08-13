@@ -1,4 +1,5 @@
-import { Field, ID, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { IsEnum, IsOptional, IsString } from "class-validator";
 import { Types } from "mongoose";
 import { OrderStatusEnum, PaymentMethodsEnum } from "src/Common/enums";
 import { OrderType } from "src/DB/models/order.model";
@@ -76,4 +77,21 @@ export class OrderObject implements Partial<OrderType> {
     paymentIntent?: string;
 
     // orderChanges?: any;
+}
+
+@InputType()
+export class ListOrderFiltersDto {
+
+    @Field(() => OrderStatusEnum, { nullable: true })
+    @IsString()
+    @IsOptional()
+    @IsEnum(OrderStatusEnum)
+    orderStatus: Types.ObjectId;
+
+
+    @Field(() => PaymentMethodsEnum, { nullable: true })
+    @IsString()
+    @IsOptional()
+    @IsEnum(PaymentMethodsEnum)
+    paymentMethod: PaymentMethodsEnum;
 }

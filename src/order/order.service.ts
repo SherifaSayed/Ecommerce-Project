@@ -158,10 +158,10 @@ async cancelOrderService(orderId: string, user:UserDocument) {
       }
 
 
- async getOrders()
+ async getOrders(filters)
  {
   return await this.orderRepository.findOneDocument({
-
+    filters,
     populateArray:[{path:'cartId',select:'products subtotal'}]
   })
  }
