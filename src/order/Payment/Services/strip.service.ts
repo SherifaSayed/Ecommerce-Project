@@ -38,4 +38,15 @@ async createStripeCoupon({
         currency
     })
 }
+  async refundPaymentIntent({
+    payment_intent,
+    reason}) 
+    {
+    return await this.stripe.refunds.create({
+        payment_intent,
+        reason})
+}
+
+
+
 }

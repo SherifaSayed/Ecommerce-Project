@@ -7,10 +7,11 @@ import { CartModel, orderModel, productModel } from 'src/DB/models';
 import { CartRespository } from 'src/DB/Repositories';
 import ProductRepository from 'src/DB/Repositories/product.repository';
 import { StripeService } from './Payment/Services';
+import { RealTimeGateway } from 'src/GateWays/websocket.gateway';
 
 @Module({
   imports:[orderModel, CartModel, productModel],
   controllers: [OrderController],
-  providers: [OrderService, CartService,CartRespository,ProductRepository, OrderRespository, StripeService],
+  providers: [OrderService, CartService,CartRespository,ProductRepository, OrderRespository, StripeService,RealTimeGateway],
 })
 export class OrderModule {}

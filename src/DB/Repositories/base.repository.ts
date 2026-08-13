@@ -1,4 +1,4 @@
-import mongoose, { Model, PopulateOptions, Types} from "mongoose";
+import mongoose, { FilterQuery, Model, PopulateOptions, Types, UpdateQuery} from "mongoose";
 
 export default abstract class  BaseRepository <T> {
     constructor(protected readonly model:Model<T>) {}
@@ -58,7 +58,7 @@ export default abstract class  BaseRepository <T> {
       { ...options, runValidators: true }
     );
   }
-findOneAndUpdate(
+  findOneAndUpdate(
   options: mongoose.QueryOptions = {},
   data: mongoose.UpdateQuery<T>
 ) {
@@ -67,7 +67,7 @@ findOneAndUpdate(
     data,
     { ...options, runValidators: true }
   );
-}
+  }
   deleteWithFindOne({
     filters,
   }: {
@@ -75,6 +75,17 @@ findOneAndUpdate(
   }): Promise<T | null> {
     return this.model.findOneAndDelete(filters);
   }
+  async updateOne(
+    filters: FilterQuery<T>,update: UpdateQuery<T>,populateArray?:any) {
+    if (filters._id)
+        return await this.model.findByIdAndUpdate(filters._id,update,{ new: true } ).populate(populateArray)
+
+    return await this.model.findOneAndUpdate(
+        filters,
+        update,
+        { new: true }
+    ).populate(populateArray)
+}
 
   deleteWithFindById(_id: Types.ObjectId) {
     const query = this.model.findByIdAndDelete(_id);
