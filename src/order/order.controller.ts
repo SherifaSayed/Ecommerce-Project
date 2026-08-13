@@ -18,7 +18,11 @@ async createOrderHandler(
 ) {
   return await this.orderService.createOrderService(authUser, data);
 }
-
+  @Post('pay-with-stripe')
+@Auth(UserRole.USER)
+async PayWithStripeHandler(@User() authUser: UserDocument, @Body() data:{orderId:string}) {
+    return await this.orderService.PayWithStripe(data.orderId, authUser);
+}
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);

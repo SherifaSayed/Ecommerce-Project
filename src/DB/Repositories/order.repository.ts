@@ -18,8 +18,8 @@ export class OrderRespository extends BaseRepository<OrderType> {
 
   async createOrder(data) {
   const newOrder = new this.orderModel({
-    userId: Types.ObjectId.createFromHexString(data.userId),
-    cartId: Types.ObjectId.createFromHexString(data.cartId),
+    userId: data.userId,
+    cartId: data.cartId ,
     totalAmount: data.totalAmount,
     address: data.address,
     phone: data.phone,
