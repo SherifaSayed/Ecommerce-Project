@@ -1,5 +1,6 @@
 import { applyDecorators, createParamDecorator, ExecutionContext, SetMetadata, UseGuards } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
+import { GqlExecutionContext } from "@nestjs/graphql";
 import { AuthGuard, RolesGuard } from "src/Guards";
 
 
@@ -15,7 +16,9 @@ export const Auth = (...roles: string[]) => {
 
 export const User = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
+    let request = ctx.switchToHttp().getRequest();
+     if (ctx['contextType'] == 'graphql')
+                 request = GqlExecutionContext.create(ctx).getContext()
     return request.user;
   },
 );
