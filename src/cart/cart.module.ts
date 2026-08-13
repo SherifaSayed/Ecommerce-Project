@@ -4,9 +4,10 @@ import { CartController } from './cart.controller';
 import ProductRepository from 'src/DB/Repositories/product.repository';
 import { CartModel, productModel, userModel } from 'src/DB/models';
 import { CartRespository, UserRepository } from 'src/DB/Repositories';
+import { GatewayModule } from 'src/GateWays/Gateway.module';
 
 @Module({
-  imports:[productModel, userModel,CartModel],
+  imports:[productModel, userModel,CartModel,GatewayModule],
   controllers: [CartController],
   providers: [CartService,ProductRepository, UserRepository, CartRespository],
 })

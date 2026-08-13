@@ -16,6 +16,11 @@ import { GlobalModule } from './global.module';
 import { CartModule } from './cart/cart.module';
 // import { GatewayModule } from './GateWays/gateway.module';
 import { OrderModule } from './order/order.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GQLModule } from './GraphQl/graphql.module';
+import { RealTimeGateway } from './GateWays/websocket.gateway';
+import { GatewayModule } from './GateWays/Gateway.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -31,7 +36,10 @@ import { OrderModule } from './order/order.module';
         return connection;
       }
     })
-  }),
+  }),GraphQLModule.forRoot<ApolloDriverConfig>({
+    driver: ApolloDriver,
+    autoSchemaFile:'./src/schema.gql'
+}),
 CacheModule.registerAsync({
   isGlobal:true,
   useFactory: async () => {
@@ -42,7 +50,7 @@ CacheModule.registerAsync({
     };
   },
 }),GlobalModule, UserModule, AuthModule, CategoryModule, BrandModule, ProductModule, CartModule,
- OrderModule ],
+ OrderModule,GQLModule,GatewayModule],
   controllers: [AppController],
   providers: [AppService,ConfigService],
 })
