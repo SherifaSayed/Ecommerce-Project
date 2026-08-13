@@ -29,6 +29,7 @@ export enum OrderStatusEnum {
   CANCELLED = "cancelled",
   RETURNED = "returned",
   REFUNDED="refunded",
-  ON_WAY="on_way"
+  ON_WAY="on_way",
+  PAID='paid'
 
 }

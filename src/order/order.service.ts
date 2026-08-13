@@ -75,9 +75,27 @@ return await this.stripeService.createCheckOutSession({
      line_items ,
      discounts:[{coupon:coupon.id}]
     })
-
-
 }
+
+
+ async webhookHandler(data:any)
+  {
+   try
+   {
+    const orderId= data.data.object.metadata.orderId;
+    
+    return await this.orderRepository.findOneAndUpdate({_id:orderId},{orderStatus:OrderStatusEnum.PAID,
+      orderChanges:{paidAt:Date.now()}, paymentIntent:data.data.object.payment_intent
+    });
+
+   }
+   catch(error)
+   {
+   console.log(error);
+   
+   }
+  }
+
   create(createOrderDto: CreateOrderDto) {
     return 'This action adds a new order';
   }

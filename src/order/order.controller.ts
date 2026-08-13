@@ -23,6 +23,11 @@ async createOrderHandler(
 async PayWithStripeHandler(@User() authUser: UserDocument, @Body() data:{orderId:string}) {
     return await this.orderService.PayWithStripe(data.orderId, authUser);
 }
+
+@Post('/webhook')
+async webhookHandler(@Body() data: any) {
+    return await this.orderService.webhookHandler(data);
+}
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);

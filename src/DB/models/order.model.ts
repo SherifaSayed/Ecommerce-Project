@@ -43,6 +43,8 @@ orderStatus: string;
   cancelledBy:{type:Types.ObjectId, ref:User.name}
 }})
   orderChanges:object;
+  @Prop({type:String})
+  paymentIntent:string
 }
 const orderSchema = SchemaFactory.createForClass(Order);
 

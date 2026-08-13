@@ -58,7 +58,16 @@ export default abstract class  BaseRepository <T> {
       { ...options, runValidators: true }
     );
   }
-
+findOneAndUpdate(
+  options: mongoose.QueryOptions = {},
+  data: mongoose.UpdateQuery<T>
+) {
+  return this.model.findOneAndUpdate(
+    {},
+    data,
+    { ...options, runValidators: true }
+  );
+}
   deleteWithFindOne({
     filters,
   }: {
