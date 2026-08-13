@@ -10,6 +10,40 @@ registerEnumType(PaymentMethodsEnum, {
 registerEnumType(OrderStatusEnum, {
     name: 'OrderStatusEnum'
 })
+  
+
+
+@ObjectType()
+export class CartProductsObjectType {
+    @Field(() => ID, { nullable: false })
+    _id: Types.ObjectId;
+
+    @Field(() => ID, { nullable: false })
+    productId: Types.ObjectId;
+
+    @Field(() => Number, { nullable: false })
+    quantity: number;
+
+    @Field(() => Number, { nullable: false })
+    finalPrice: number;
+}
+
+
+@ObjectType()
+export class CartObjectType {
+
+    @Field(() => ID, { nullable: false })
+    _id: Types.ObjectId;
+  @Field(()=>[CartProductsObjectType], { nullable: false })
+   products:CartProductsObjectType[]
+
+
+    @Field(() => Number, { nullable: false })
+    subTotal: number;
+
+}
+
+
 
 @ObjectType()
 export class OrderObject implements Partial<OrderType> {
@@ -20,7 +54,7 @@ export class OrderObject implements Partial<OrderType> {
     @Field(() => ID, { nullable: false })
     userId: Types.ObjectId;
 
-    @Field(() => ID, { nullable: false })
+    @Field(() => CartObjectType, { nullable: false })
     cartId: string | Types.ObjectId | undefined;
 
     @Field(() => String, { nullable: false })
